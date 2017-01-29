@@ -1,4 +1,4 @@
-NAME = phusion/baseimage
+NAME = stratolinux/baseimage-docker
 VERSION = 0.9.19
 
 .PHONY: all build test tag_latest release ssh
@@ -7,6 +7,10 @@ all: build
 
 build:
 	docker build -t $(NAME):$(VERSION) --rm image
+
+push: build
+	docker login --username=tssgery 
+	docker push $(NAME):$(VERSION)
 
 test:
 	env NAME=$(NAME) VERSION=$(VERSION) ./test/runner.sh
